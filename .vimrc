@@ -102,7 +102,6 @@ set ch=1					" Сделать строку команд высотой в одн
 set mousehide				" Скрывать указатель мыши, когда печатаем
 set autowrite				" Настройка автоматической записи указывает Vim писать в старый файл при переключении между файлами
 set backspace=indent,eol,start whichwrap+=<,>,[,] " backspace обрабатывает отступы, концы строк
-set expandtab				" заменять табуляцию на соответствующее количество пробелов
 set wrap					" Переносить длинные строки
 set lbr						" Переносить целые слова
 set linebreak				" разрываем строки
@@ -127,9 +126,10 @@ set guioptions-=T
 set guioptions-=m
 
 " Настройки отступа
-"et tabstop=2				" Ширина табуляции
-"et shiftwidth=2			" Размер отступов
-"et softtabstop=2			" Ширина 'мягкого' таба
+set expandtab				" заменять табуляцию на соответствующее количество пробелов
+set tabstop=4				" Ширина табуляции
+set shiftwidth=4			" Размер отступов
+set softtabstop=4			" Ширина 'мягкого' таба
 set autoindent				" Включить автоотступы
 set smarttab				" Умные отступы
 "et cin						" Отступы в стиле Си
@@ -138,6 +138,7 @@ set smarttab				" Умные отступы
 
 autocmd FileType * set tabstop=2|set shiftwidth=2|set noexpandtab
 autocmd FileType python set tabstop=2|set shiftwidth=2|set expandtab
+autocmd FileType rust set tabstop=4|set shiftwidth=4|set expandtab
 
 "  при переходе за границу в 80 символов в Ruby/Python/js/C/C++ подсвечиваем на темном фоне текст
 " the following ensures that characters longer than 80 get highlighted.
