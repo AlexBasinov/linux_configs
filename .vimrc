@@ -22,7 +22,7 @@ Plugin 'benekastah/neomake'
 Plugin 'tpope/vim-surround'	   	" Parentheses, brackets, quotes, XML tags, and more
 
 
-Plugin 'altercation/vim-colors-solarized'
+" Plugin 'altercation/vim-colors-solarized'
 
 "---------------=== Languages support ===-------------
 " --- Python ---
@@ -30,12 +30,13 @@ Plugin 'altercation/vim-colors-solarized'
 "Plugin 'davidhalter/jedi-vim' 		" Jedi-vim autocomplete plugin
 "Plugin 'mitsuhiko/vim-jinja'		" Jinja support for vim
 "Plugin 'mitsuhiko/vim-python-combined'  " Combined Python 2/3 for Vim
+Plugin 'phildawes/racer'
 
 "Plugin 'hrp/EnhancedCommentify' 		"It provides a convenient way to comment/decomment lines of code in source files
 Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-"Plugin 'wting/rust.vim'
+Plugin 'rust-lang/rust.vim'
 
 call vundle#end()            		" required
 filetype on
@@ -63,7 +64,7 @@ set history=50				" сохранять 50 строк истории команд
 set ttyfast					" коннект с терминалом быстрый
 set shortmess+=tToOI		" убираем заставку при старте
 set background=dark
-colorscheme solarized
+"colorscheme solarized
 set t_Co=256				" включаем  поддержку 256 цветов в терминале
 set nocompatible			" Включаем несовместимость настроек с Vi (ибо Vi нам и не понадобится).
 set title
@@ -257,7 +258,7 @@ vmap <F4>v <esc>:NERDTreeToggle<cr>i
 imap <F4>v <esc>:NERDTreeToggle<cr>i
 nnoremap <silent> <F4> :NERDTreeToggle<cr>
 
-call togglebg#map("<F5>")
+"call togglebg#map("<F5>")
 
 "F5 - просмотр списка буферов
 "nmap <F5> <Esc>:BufExplorerVerticalSplit<cr>
@@ -512,3 +513,7 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }
+
+" racer
+let g:racer_cmd = "/usr/bin/racer"
+let $RUST_SRC_PATH="/home/alex/Projects/rust"

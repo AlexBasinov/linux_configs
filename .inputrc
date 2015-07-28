@@ -1,0 +1,8 @@
+$include /etc/inputrc
+TAB: menu-complete
+set show-all-if-ambiguous on
+set completion-ignore-case on
+#glob-complete-word
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set echo-control-characters off
