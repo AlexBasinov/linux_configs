@@ -82,3 +82,41 @@ ssh() {
 	settitle "bash"
 }
 
+# jumping multiple levels up in a hierarchy
+cd() {
+    if [ "$1" == "-" ]; then
+        popd > /dev/null;
+        pwd
+    elif [ -z "$1" ]; then
+        pushd ~ >/dev/null;
+    else
+        pushd "$1" >/dev/null;
+    fi
+}
+up() {
+    if [[ -z "$1" ]]; then
+        gotodir=..
+    else
+        gotodir="$1"
+        local CDPATH=
+        dir=$(pwd)
+        while [[ $dir != / ]]; do
+            dir=$(dirname "$dir")
+            CDPATH+=:$dir
+        done
+    fi
+    pushd "$gotodir" >/dev/null
+    pwd
+}
+complete -o dirnames -o nospace -F _upcomp up
+_upcomp() {
+    local CDPATH=
+    local IFS=$' \n\t'
+    dir=$(pwd)
+    while [[ $dir != / ]]; do
+        dir=$(dirname "$dir")
+        CDPATH+=:$dir
+    done
+    # Use the existing completion for cd
+    _cd cd "$2" "$3"
+}
