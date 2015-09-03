@@ -10,9 +10,11 @@ alias p='pacman-color'
 alias y='yaourt'
 alias s='sudo'
 
-export PS1='\[\033[0;32m\]\u\[\033[0;37m\]@\[\033[1;34m\]\h\[\033[0;37m\]:\[\033[0;31m\]\W \[\033[0;36m\]\$ \[\033[0m\]'
+#export PS1='\[\033[0;32m\]\u\[\033[0;37m\]@\[\033[1;34m\]\h\[\033[0;37m\]:\[\033[0;31m\]\W \[\033[0;36m\]\$ \[\033[0m\]'
 #for root
 #export PS1='\[\033[0;31m\]\u\[\033[0;37m\]@\[\033[1;34m\]\h\[\033[0;37m\]:\[\033[0;31m\]\W \[\033[0;31m\]\$ \[\033[0m\]'
+export PS1="\[\e[1;$((31 + $(hostname | cksum | cut -c1-3) % 6))m\]\h\[\e[0m\]:\w \u\$ "
+
 
 shopt -s nocaseglob #fix regist
 # Не перезаписывать файл истории, а добовлять
@@ -82,3 +84,41 @@ ssh() {
 	settitle "bash"
 }
 
+# jumping multiple levels up in a hierarchy
+cd() {
+    if [ "$1" == "-" ]; then
+        popd > /dev/null;
+        pwd
+    elif [ -z "$1" ]; then
+        pushd ~ >/dev/null;
+    else
+        pushd "$1" >/dev/null;
+    fi
+}
+up() {
+    if [[ -z "$1" ]]; then
+        gotodir=..
+    else
+        gotodir="$1"
+        local CDPATH=
+        dir=$(pwd)
+        while [[ $dir != / ]]; do
+            dir=$(dirname "$dir")
+            CDPATH+=:$dir
+        done
+    fi
+    pushd "$gotodir" >/dev/null
+    pwd
+}
+complete -o dirnames -o nospace -F _upcomp up
+_upcomp() {
+    local CDPATH=
+    local IFS=$' \n\t'
+    dir=$(pwd)
+    while [[ $dir != / ]]; do
+        dir=$(dirname "$dir")
+        CDPATH+=:$dir
+    done
+    # Use the existing completion for cd
+    _cd cd "$2" "$3"
+}
