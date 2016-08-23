@@ -14,15 +14,11 @@ Plugin 'gmarik/Vundle.vim'		" let Vundle manage Vundle, required
 Plugin 'scrooloose/nerdtree' 	    	" Project and file navigation
 Plugin 'majutsushi/tagbar'          	" Class/module browser
 Plugin 'tomtom/tcomment_vim'
-Plugin 'benekastah/neomake'
 
 "------------------=== Other ===----------------------
-"Plugin 'fisadev/FixedTaskList.vim'  	" Pending tasks list
 "Plugin 'rosenfeld/conque-term'      	" Consoles as buffers
 Plugin 'tpope/vim-surround'	   	" Parentheses, brackets, quotes, XML tags, and more
 
-
-" Plugin 'altercation/vim-colors-solarized'
 
 "---------------=== Languages support ===-------------
 " --- Python ---
@@ -30,13 +26,17 @@ Plugin 'tpope/vim-surround'	   	" Parentheses, brackets, quotes, XML tags, and m
 "Plugin 'davidhalter/jedi-vim' 		" Jedi-vim autocomplete plugin
 "Plugin 'mitsuhiko/vim-jinja'		" Jinja support for vim
 "Plugin 'mitsuhiko/vim-python-combined'  " Combined Python 2/3 for Vim
-Plugin 'phildawes/racer'
+
+" --- Rust ---
+Plugin 'rust-lang/rust.vim'
+Plugin 'racer-rust/vim-racer'
+" --- Go ---
+Plugin 'fatih/vim-go'
 
 "Plugin 'hrp/EnhancedCommentify' 		"It provides a convenient way to comment/decomment lines of code in source files
 Plugin 'ervandew/supertab'
-Plugin 'fatih/vim-go'
 Plugin 'Valloric/YouCompleteMe', { 'do': './install.sh' }
-Plugin 'rust-lang/rust.vim'
+"Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 
 call vundle#end()            		" required
 filetype on
@@ -113,7 +113,6 @@ set pastetoggle=			" Переключает режим вклейки, кото�
 set mousemodel=popup
 set timeoutlen=10
 let no_buffers_menu=1
-set mousemodel=popup
 
 
 " Не выгружать буфер, когда переключаемся на другой
@@ -192,8 +191,8 @@ set sessionoptions=curdir,buffers,tabpages
 
 "-------------------------- фичи --------------------------
 
-" сохраняем файл через судо и не выводим его в vim
-command! -nargs=0 -bang WSudo :silent! w !sudo tee % &>/dev/null
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee > /dev/null %
 
 "" Автоматически перечитывать конфигурацию VIM после сохранения
 autocmd! bufwritepost $MYVIMRC source $MYVIMRC
@@ -516,5 +515,6 @@ let g:tagbar_type_go = {
 \ }
 
 " racer
+set hidden
 let g:racer_cmd = "/usr/bin/racer"
-let $RUST_SRC_PATH="/home/alex/Projects/rust"
+let $RUST_SRC_PATH="/usr/src/rust/src"
